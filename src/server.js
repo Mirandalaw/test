@@ -8,8 +8,6 @@ require('dotenv').config();
 
 const app = express();
 
-const users = [];
-
 const { MONGO_URI } = process.env;
 console.log(MONGO_URI);
 const server = async () => {
@@ -21,10 +19,17 @@ const server = async () => {
     console.log('MongoDb is Connected');
     app.use(express.json());
 
-    app.get('/user', (req, res) => {
-      /* eslint arrow-body-style: ["error", "always"] */
-      /* eslint-env es6 */
-      // return res.send({ users: users });
+    app.get('/user', async (req, res) => {
+      try {
+        // User.find({}) => 다수의 유저를 불러옴
+        const users = await User.find({});
+        /* eslint arrow-body-style: ["error", "always"] */
+        /* eslint-env es6 */
+        return res.send({ users });
+      } catch (err) {
+        console.log(err);
+        return res.status(500).send({ err: err.message });
+      }
     });
 
     // eslint-disable-next-line consistent-return
