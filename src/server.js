@@ -9,7 +9,6 @@ require('dotenv').config();
 const app = express();
 
 const { MONGO_URI } = process.env;
-console.log(MONGO_URI);
 const server = async () => {
   try {
     await mongoose.connect(MONGO_URI, {
