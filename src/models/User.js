@@ -3,7 +3,8 @@ const { Schema, model } = require('mongoose');
 
 const UserSchema = new Schema(
   {
-    username: { type: String, required: true },
+    // 중복 허용 x unique :true
+    username: { type: String, required: true, unique: true },
     name: {
       first: { type: String, required: true },
       last: { type: String, required: true },

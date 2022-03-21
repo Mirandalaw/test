@@ -12,8 +12,9 @@ const { MONGO_URI } = process.env;
 const server = async () => {
   try {
     await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
+      // useCreateIndex: true,
     });
     console.log('MongoDb is Connected');
     app.use(express.json());
@@ -30,7 +31,20 @@ const server = async () => {
         return res.status(500).send({ err: err.message });
       }
     });
-
+    // :userID <<<  userId를 변수로 받을 수 있음
+    app.get('/user/:userId', async (req, res) => {
+      try {
+        const { userId } = req.params;
+        // 만약 ObjectId 가 ObjectId형식이 아닐경우 유저가 잘못 입력한 경우임을 catch후 400err처리
+        if (!mongoose.isValidObjectId(userId))
+          return res.status(400).send({ err: 'invaild userId' });
+        const user = await User.findOne({ _id: userId });
+        return res.send({ user });
+      } catch (err) {
+        console.log(err);
+        return res.status(500).send({ err: err.message });
+      }
+    });
     // eslint-disable-next-line consistent-return
     app.post('/user', async (req, res) => {
       // mongoose 인스턴스를 만들어주고
@@ -46,6 +60,43 @@ const server = async () => {
             .send({ err: 'Both first and last names are required' });
         const user = new User(req.body);
         await user.save();
+        return res.send({ user });
+      } catch (err) {
+        console.log(err);
+        return res.status(500).send({ err: err.message });
+      }
+    });
+
+    app.delete('/user/:userId', async (req, res) => {
+      try {
+        const { userId } = req.params;
+        if (!mongoose.isValidObjectId(userId))
+          return res.status(400).send({ err: 'invaild userId' });
+        // deleteOne을 사용해도 됨 더효율적일 수도 있음 findOneAndDelete경우 유저 정보를 보여주고 삭제하는 것
+        const user = await User.findOneAndDelete({ _id: userId });
+        return res.send({ user });
+      } catch (err) {
+        console.log(err);
+        return res.status(500).send({ err: err.message });
+      }
+    });
+
+    app.put('/user/:userId', async (req, res) => {
+      try {
+        const { userId } = req.params;
+        if (!mongoose.isValidObjectId(userId))
+          return res.status(400).send({ err: 'invaild userId' });
+        const { age } = req.body;
+        if (!age) return res.status(400).send({ err: 'age is required' });
+        if (typeof age !== 'number')
+          return res.status(400).send({ err: 'age must be a number' });
+        // findById userId를 그냥 써줘도됨
+        const user = await User.findByIdAndUpdate(
+          userId,
+          { $set: { age } },
+          // new : true 를 사용하면 업데이트 이후의 데이터를 보여줌
+          { new: true }
+        );
         return res.send({ user });
       } catch (err) {
         console.log(err);
