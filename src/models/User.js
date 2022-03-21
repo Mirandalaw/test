@@ -13,9 +13,9 @@ const UserSchema = new Schema(
     email: String,
     // timestamps : 언제 생성됐는지 .
   },
-  { timestamps: true }
+  { timestamps: false }
 );
 
 // user라는 collection을 만들꺼야 UserSchema라는 데이터 형태를 가지고 있어.
 const User = model('user', UserSchema);
-module.exports = { User };
+module.exports= { User };
