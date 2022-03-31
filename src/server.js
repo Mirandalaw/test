@@ -16,6 +16,8 @@ const server = async () => {
       // useUnifiedTopology: true,
       // useCreateIndex: true,
     });
+    // mongoose가 내부적으로 어떤 일을 하는지 알려주는 코드.
+    mongoose.set('debug', true);
     console.log('MongoDb is Connected');
     app.use(express.json());
 
