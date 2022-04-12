@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>회원가입</h1>
+        <table>
+            <!-- form 속성 action : 작성한 정보를 어디로 보낼지 
+                 action 속성의 값으로는 2번에서 작성한 login과 동일함
+                 method : 정보를 전달할 때 GET말고 POST를 사용할 것-->
+            <form action="/signUp" method="POST">
+                <input id="user_name" name="user_name" type="text" pleaceholder="User">
+                <br />
+                <input id = "user_id" name ="user_id" type= "text" placeholder="ID">
+                <br />
+                <input id="user_pwd" name="user_pwd" type="password" placeholder="Password">
+                <br />
+                <input id="email" name="email" type="email" placeholder="Email">
+                <br />
+                <input id="address" name="address" type="text" placeholder="Address">
+                <br />
+                <button type="submit ">완료</button>
+            </form>
+        </center>
+</body>
+</html>
