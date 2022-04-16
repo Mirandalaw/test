@@ -1,28 +1,55 @@
-const mongodb = require('../utils/mongodbModule/mongoClient');
+// const mongodb = require('../utils/mongodbModule/mongoClient');
 
-const signUp = async (jsonObj) => {
-  var indexOptions = {
-    sort: ['index', 'desc'],
-  };
-  var queryOptions = {
-    memberId: jsonObj.memberId,
-  };
+// module.exports = {
+//   /**
+//    * signUp user
+//    *
+//    * @param {Object} jsonObj
+//    * @returns
+//    */
+//   signUp: async (jsonObj) => {
+//     var indexOptions = {
+//       sort: ['index', 'desc'],
+//     };
 
-  let result = new Object();
+//     var queryOptions = {
+//       memberId: jsonObj.memberId,
+//     };
 
-  await mongodb
-    .mongoSelectOne('member', queryOptions, {})
-    .then((selectResult) => {
-      if (selectResult.lenght != 0) {
-        result.response = 'Failed';
-      } else {
-        mongodb.mongodbInsertOne('member', jsonObj);
-        result.response = 'Suc';
-      }
-    })
-    .catch((err) => {
-      result.response = 'Failed';
-      result.error = err;
-    });
-  return result;
-};
+//     let result = new Object();
+
+//     await mongodb
+//       .mongoSelectOne('member', {}, indexOptions)
+//       .then(function (selectResult) {
+//         try {
+//           jsonObj.index = selectResult.index;
+//           jsonObj.index++;
+//         } catch (error) {
+//           jsonObj.index = 1;
+//         }
+//       })
+//       .catch(function (err) {
+//         //mongoDB 에러시
+//         result.response = 'FAILED';
+//         result.error = err;
+//       });
+
+//     await mongodb
+//       .mongoSelectOne('member', queryOptions, {})
+//       .then(function (selectResult) {
+//         if (selectResult.length != 0) {
+//           result.response = 'FAILED';
+//         } else {
+//           mongodb.mongoInsertOne('member', jsonObj);
+//           result.response = 'SUC';
+//         }
+//       })
+//       .catch(function (err) {
+//         //mongoDB 에러시
+//         result.response = 'FAILED';
+//         result.error = err;
+//       });
+
+//     return result;
+//   },
+// };
