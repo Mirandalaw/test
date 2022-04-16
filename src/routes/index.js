@@ -1,6 +1,7 @@
 const express = require('express');
-
 const router = express.Router();
+const mongoTest = require('../utils/mongodbModule/mongoClient');
+const controller = require('../middlewares/userSignUp');
 
 router.get('/', (req, res) => {
   res.send('SUC');
@@ -8,7 +9,11 @@ router.get('/', (req, res) => {
 router.get('/signUp', (req, res) => {
   res.render('signUp');
 });
-router.post('/signUp', (req, res) => {});
+router.post('/signUp', async (req, res) => {
+  console.log(req.body);
+  mongoTest.mongodbInsertOne('users', req.body);
+  // res.status(200).send({ response: 'Suc' });
+});
 // 로그인 폼이 있는 페이지는 GET 방식으로 요청 응답 : login 페이지에 대한 응답일 뿐 로그인 정보를 주는 것이 아님
 // 로그인 정보를 넘겨주고 서버는 그에 대한 응답을 할 때에는 POST를 사용
 // 정보를 작성하는 동작과 정보를 전달하는 동작을 구분할 줄 알아야함
