@@ -1,7 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
-
-var url =
-  'mongodb+srv://jhpark:vosej147@mongodbtutorial.qkxxy.mongodb.net/test?authSource=admin&replicaSet=atlas-10qenc-shard-0&readPreference=primary&ssl=true';
+require('dotenv').config();
+var uri = process.env.MONGO_URI;
 
 let mongoModule = {
   /**
@@ -12,7 +11,7 @@ let mongoModule = {
   mongoSelectAll: (collectionName) => {
     return new Promise((resolve, reject) => {
       let data = new Array();
-      MongoClient.connect(url, async (err, database) => {
+      MongoClient.connect(uri, async (err, database) => {
         if (err) {
           console.log(err);
           reject(err);
@@ -31,7 +30,7 @@ let mongoModule = {
   },
   mongoSelectOne: (collectionName, queryObj, optionsObj) => {
     return new Promise((resolve, reject) => {
-      MongoClient.connect(url, async (err, database) => {
+      MongoClient.connect(uri, async (err, database) => {
         if (err) {
           console.log(err);
           reject(err);
@@ -55,7 +54,7 @@ let mongoModule = {
   },
 
   mongodbInsertOne: (collectionName, jsonObj) => {
-    MongoClient.connect(url, (err, database) => {
+    MongoClient.connect(uri, (err, database) => {
       if (err) console.log(err);
       else {
         console.log('db on...');
@@ -74,7 +73,7 @@ let mongoModule = {
     });
   },
   mongoInsertMany: function (collectionName, jsonObj) {
-    MongoClient.connect(url, function (err, database) {
+    MongoClient.connect(uri, function (err, database) {
       if (err) console.log(err);
       else {
         database

@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 // const path = require('path');
 const static = require('serve-static');
+require('dotenv').config();
 
 const app = express();
 const PORT = 5000;
@@ -16,6 +17,7 @@ app.set('views', __dirname + '/views');
 
 app.listen(PORT, () => {
   console.log(`The Express Server is Listening at port :${PORT}`);
+  // console.log(`MongoURL = ${process.env.MONGO_URL}`);
 });
 
 const userRoute = require('./routes/userRoute');
